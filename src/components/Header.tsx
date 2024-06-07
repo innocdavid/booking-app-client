@@ -8,7 +8,7 @@ const Header = () => {
                      <Link to="/">innocHolidays.com</Link>
                 </span>
                 <span className="flex space-x-2">
-                    <Link to="/" className="flex items-center text-blue-600 px-3 font-bold hover:bg-gray-100">Login</Link>
+                    <Link to="/" className="flex items-center bg-white text-blue-600 px-3 font-bold hover:bg-gray-100">Login</Link>
                 </span>
             </div>
         </div>
