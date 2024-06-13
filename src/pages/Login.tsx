@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import * as apiClient from '../api/api-client';
 import { useAppContext } from "../contexts/AppContext";
 import { useNavigate } from "react-router-dom";
@@ -11,7 +11,7 @@ export type LoginFormData = {
 
 const Login = () => {
     const { showToast } = useAppContext();
-
+    const queryClient = useQueryClient();
     const navigate = useNavigate();
 
     const { 
@@ -22,6 +22,7 @@ const Login = () => {
 
     const mutation = useMutation(apiClient.login, {
         onSuccess: async () => {
+            await queryClient.invalidateQueries("validateToken");
             showToast({ message: "Login successful", type: "SUCCESS" });
             navigate("/");
         },
