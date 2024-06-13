@@ -5,33 +5,44 @@ import {
   Navigate } from "react-router-dom"
 import Layout from "./layouts/Layout"
 import Register from "./pages/Register"
+import Login from "./pages/Login"
 
 function App() {
 
   return (
     <Router>
       <Routes>
-        <Route 
+        <Route
           path="/" 
-          element={ 
+          element={
             <Layout>
               <p>Home Page</p>
-            </Layout>} 
+            </Layout>
+          }
         />
-        <Route 
-          path="/search" 
+        <Route
+          path="/search"
           element={
             <Layout>
               <p>Search Page</p>
-            </Layout>} 
+            </Layout>
+          }
         />
-        <Route 
+        <Route
           path="/register" 
           element={ 
             <Layout>
               <Register />
             </Layout>
-           } 
+           }
+        />
+        <Route
+          path="/login"
+          element={
+            <Layout>
+              <Login />
+            </Layout>
+          }
         />
         <Route path="*" element={ <Navigate to="/" />} />
       </Routes>
