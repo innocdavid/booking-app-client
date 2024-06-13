@@ -1,4 +1,8 @@
 import { useForm } from "react-hook-form";
+import { useMutation } from "react-query";
+import * as apiClient from '../api/api-client';
+import { useAppContext } from "../contexts/AppContext";
+import { useNavigate } from "react-router-dom";
 
 export type LoginFormData = {
     email: string;
@@ -6,10 +10,32 @@ export type LoginFormData = {
 }
 
 const Login = () => {
-    const { register, formState: { errors } } = useForm<LoginFormData>();
+    const { showToast } = useAppContext();
+
+    const navigate = useNavigate();
+
+    const { 
+        register, 
+        formState: { errors },
+        handleSubmit
+    } = useForm<LoginFormData>();
+
+    const mutation = useMutation(apiClient.login, {
+        onSuccess: async () => {
+            showToast({ message: "Login successful", type: "SUCCESS" });
+            navigate("/");
+        },
+        onError: (error: Error) => {
+            showToast({ message: error.message, type: "ERROR" });
+        }
+    });
+
+    const onSubmit = handleSubmit((data) => {
+        mutation.mutate(data)
+    })
 
     return (
-        <form className="flex flex-col gap-5">
+        <form className="flex flex-col gap-5" onSubmit={onSubmit}>
             <h2 className="text-3xl font-bold">Login</h2>
             <label className="text-gray-700 text-sm font-bold flex-1">
                 Email
@@ -35,6 +61,14 @@ const Login = () => {
                     <span className="text-red-500">{ errors.password.message }</span>
                 )}
             </label>
+            <span>
+                <button 
+                    type="submit"
+                    className="bg-blue-600 text-white p-2 font-bold hover:bg-blue-500 text-xl"
+                >
+                    Login
+                </button>
+            </span>
         </form>
     );
 };
