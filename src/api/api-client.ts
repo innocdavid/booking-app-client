@@ -45,4 +45,13 @@ export const validateToken = async () => {
     if (!response.ok) throw new Error("Invalid token");
 
     return response.json();
-}
+};
+
+export const logout = async () => {
+    const response = await fetch(`${API_BASE_URL}/api/v1/auth/logout`, {
+        credentials: "include",
+        method: "POST",
+    });
+
+    if (!response.ok) throw new Error("Error during logout");
+};
